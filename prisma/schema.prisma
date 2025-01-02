@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tb_aspek {
+  id_aspek     Int            @id @default(autoincrement())
+  aspek        String         @db.VarChar(100)
+  time_stamp   DateTime       @default(now()) @db.Timestamp(0)
+  id_domain    Int?
+  tb_domain    tb_domain?     @relation(fields: [id_domain], references: [id_domain], onDelete: Restrict, onUpdate: Restrict, map: "tb_aspek_ibfk_1")
+  tb_indikator tb_indikator[]
+
+  @@index([id_domain], map: "id_indikator")
+}
+
+model tb_domain {
+  id_domain  Int        @id @default(autoincrement())
+  domain     String     @db.VarChar(50)
+  time_stamp DateTime   @default(now()) @db.Timestamp(0)
+  tb_aspek   tb_aspek[]
+}
+
+model tb_indikator {
+  id_indikator   Int            @id @default(autoincrement())
+  indikator      String         @db.VarChar(50)
+  nama_indikator String?        @db.Text
+  id_aspek       Int?
+  id_domain      Int?
+  tb_aspek       tb_aspek?      @relation(fields: [id_aspek], references: [id_aspek], onDelete: Restrict, onUpdate: Restrict, map: "tb_indikator_ibfk_1")
+  tb_kuisioner   tb_kuisioner[]
+
+  @@index([id_aspek], map: "id_aspek")
+  @@index([id_domain], map: "id_domain")
+  @@index([id_aspek], map: "id_aspek_2")
+}
+
+model tb_kuisioner {
+  id_kuisioner Int           @id @default(autoincrement())
+  kuisioner    String        @db.Text
+  time_stamp   DateTime      @default(now()) @db.Timestamp(0)
+  id_indikator Int?
+  tb_indikator tb_indikator? @relation(fields: [id_indikator], references: [id_indikator], onDelete: Restrict, onUpdate: Restrict, map: "tb_kuisioner_ibfk_1")
+
+  @@index([id_indikator], map: "id_spbe")
+}
