@@ -8,31 +8,34 @@ datasource db {
 }
 
 model tb_aspek {
-  id_aspek     Int            @id @default(autoincrement())
-  aspek        String         @db.VarChar(100)
-  time_stamp   DateTime       @default(now()) @db.Timestamp(0)
-  id_domain    Int?
-  tb_domain    tb_domain?     @relation(fields: [id_domain], references: [id_domain], onDelete: Restrict, onUpdate: Restrict, map: "tb_aspek_ibfk_1")
-  tb_indikator tb_indikator[]
+  id_aspek        Int               @id @default(autoincrement())
+  aspek           String            @db.VarChar(100)
+  time_stamp      DateTime          @default(now()) @db.Timestamp(0)
+  id_domain       Int?
+  jawab_kuisioner jawab_kuisioner[]
+  tb_domain       tb_domain?        @relation(fields: [id_domain], references: [id_domain], onDelete: Restrict, onUpdate: Restrict, map: "tb_aspek_ibfk_1")
+  tb_indikator    tb_indikator[]
 
   @@index([id_domain], map: "id_indikator")
 }
 
 model tb_domain {
-  id_domain  Int        @id @default(autoincrement())
-  domain     String     @db.VarChar(50)
-  time_stamp DateTime   @default(now()) @db.Timestamp(0)
-  tb_aspek   tb_aspek[]
+  id_domain       Int               @id @default(autoincrement())
+  domain          String            @db.VarChar(50)
+  time_stamp      DateTime          @default(now()) @db.Timestamp(0)
+  jawab_kuisioner jawab_kuisioner[]
+  tb_aspek        tb_aspek[]
 }
 
 model tb_indikator {
-  id_indikator   Int            @id @default(autoincrement())
-  indikator      String         @db.VarChar(50)
-  nama_indikator String?        @db.Text
-  id_aspek       Int?
-  id_domain      Int?
-  tb_aspek       tb_aspek?      @relation(fields: [id_aspek], references: [id_aspek], onDelete: Restrict, onUpdate: Restrict, map: "tb_indikator_ibfk_1")
-  tb_kuisioner   tb_kuisioner[]
+  id_indikator    Int               @id @default(autoincrement())
+  indikator       String            @db.VarChar(50)
+  nama_indikator  String?           @db.Text
+  id_aspek        Int?
+  id_domain       Int?
+  jawab_kuisioner jawab_kuisioner[]
+  tb_aspek        tb_aspek?         @relation(fields: [id_aspek], references: [id_aspek], onDelete: Restrict, onUpdate: Restrict, map: "tb_indikator_ibfk_1")
+  tb_kuisioner    tb_kuisioner[]
 
   @@index([id_aspek], map: "id_aspek")
   @@index([id_domain], map: "id_domain")
@@ -47,4 +50,27 @@ model tb_kuisioner {
   tb_indikator tb_indikator? @relation(fields: [id_indikator], references: [id_indikator], onDelete: Restrict, onUpdate: Restrict, map: "tb_kuisioner_ibfk_1")
 
   @@index([id_indikator], map: "id_spbe")
+}
+
+model jawab_kuisioner {
+  id_jawab_kuisioner Int                     @id @default(autoincrement())
+  level              Int
+  soal               String                  @db.Text
+  jawaban            jawab_kuisioner_jawaban
+  id_domain          Int
+  id_aspek           Int
+  id_indikator       Int
+  time_stamp         DateTime                @default(now()) @db.Timestamp(0)
+  tb_domain          tb_domain               @relation(fields: [id_domain], references: [id_domain], onDelete: Cascade, map: "jawab_kuisioner_ibfk_1")
+  tb_aspek           tb_aspek                @relation(fields: [id_aspek], references: [id_aspek], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_2")
+  tb_indikator       tb_indikator            @relation(fields: [id_indikator], references: [id_indikator], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_3")
+
+  @@index([id_aspek], map: "id_aspek")
+  @@index([id_domain], map: "id_domain")
+  @@index([id_indikator], map: "id_indikator")
+}
+
+enum jawab_kuisioner_jawaban {
+  Ya
+  Tidak
 }

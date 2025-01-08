@@ -1,6 +1,7 @@
 import { Body, Injectable, Param } from '@nestjs/common';
 import { tb_indikator } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { Pertanyaan } from 'src/type/typeDto';
 
 @Injectable()
 export class IndikatorService {
@@ -22,6 +23,25 @@ export class IndikatorService {
       data: {
         indikator: formIndikator.indikator,
         nama_indikator: formIndikator.nama_indikator,
+      },
+    });
+  }
+
+  async jawaban(
+    data: Pertanyaan,
+    id_domain: string,
+    id_aspek: string,
+    id_indikator: string,
+    level: string,
+  ) {
+    return await this.prisma.jawab_kuisioner.create({
+      data: {
+        jawaban: data.jawaban,
+        soal: data.teks,
+        id_domain: Number(id_domain),
+        id_aspek: Number(id_aspek),
+        id_indikator: Number(id_indikator),
+        level: Number(level),
       },
     });
   }
