@@ -34,6 +34,7 @@ model tb_indikator {
   id_aspek        Int?
   id_domain       Int?
   jawab_kuisioner jawab_kuisioner[]
+  skor            skor[]
   tb_aspek        tb_aspek?         @relation(fields: [id_aspek], references: [id_aspek], onDelete: Restrict, onUpdate: Restrict, map: "tb_indikator_ibfk_1")
   tb_kuisioner    tb_kuisioner[]
 
@@ -61,13 +62,42 @@ model jawab_kuisioner {
   id_aspek           Int
   id_indikator       Int
   time_stamp         DateTime                @default(now()) @db.Timestamp(0)
+  id_penguji         Int
   tb_domain          tb_domain               @relation(fields: [id_domain], references: [id_domain], onDelete: Cascade, map: "jawab_kuisioner_ibfk_1")
   tb_aspek           tb_aspek                @relation(fields: [id_aspek], references: [id_aspek], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_2")
   tb_indikator       tb_indikator            @relation(fields: [id_indikator], references: [id_indikator], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_3")
+  penguji            penguji                 @relation(fields: [id_penguji], references: [id_penguji], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_4")
 
   @@index([id_aspek], map: "id_aspek")
   @@index([id_domain], map: "id_domain")
   @@index([id_indikator], map: "id_indikator")
+  @@index([id_penguji], map: "id_penguji")
+}
+
+model penguji {
+  id_penguji      Int               @id @default(autoincrement())
+  nama_penguji    String            @db.VarChar(100)
+  jabatan         String            @db.VarChar(100)
+  keterangan      String            @db.Text
+  tanggal_uji     String            @db.VarChar(50)
+  time_stamp      DateTime          @default(now()) @db.Timestamp(0)
+  jawab_kuisioner jawab_kuisioner[]
+  skor            skor[]
+
+  @@index([time_stamp], map: "time_stamp")
+}
+
+model skor {
+  id_skor      Int          @id @default(autoincrement())
+  id_penguji   Int?
+  id_indikator Int
+  level        Int
+  skor         Int
+  penguji      penguji?     @relation(fields: [id_penguji], references: [id_penguji], onDelete: Cascade, onUpdate: Restrict, map: "skor_ibfk_1")
+  tb_indikator tb_indikator @relation(fields: [id_indikator], references: [id_indikator], onDelete: Cascade, onUpdate: Restrict, map: "skor_ibfk_2")
+
+  @@index([id_indikator], map: "id_indikator")
+  @@index([id_penguji], map: "id_penguji")
 }
 
 enum jawab_kuisioner_jawaban {

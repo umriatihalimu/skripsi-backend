@@ -1,5 +1,5 @@
 import { Body, Injectable, Param } from '@nestjs/common';
-import { tb_indikator } from '@prisma/client';
+import { penguji, tb_indikator } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Pertanyaan } from 'src/type/typeDto';
 
@@ -33,6 +33,7 @@ export class IndikatorService {
     id_aspek: string,
     id_indikator: string,
     level: string,
+    id_penguji: string,
   ) {
     return await this.prisma.jawab_kuisioner.create({
       data: {
@@ -42,6 +43,34 @@ export class IndikatorService {
         id_aspek: Number(id_aspek),
         id_indikator: Number(id_indikator),
         level: Number(level),
+        id_penguji: Number(id_penguji),
+      },
+    });
+  }
+
+  async skor(
+    id_indikator: string,
+    id_penguji: string,
+    level: string,
+    skor: string,
+  ) {
+    return await this.prisma.skor.create({
+      data: {
+        skor: Number(skor),
+        level: Number(level),
+        id_indikator: Number(id_indikator),
+        id_penguji: Number(id_penguji),
+      },
+    });
+  }
+
+  async penguji(formData: penguji) {
+    return await this.prisma.penguji.create({
+      data: {
+        nama_penguji: formData.nama_penguji,
+        jabatan: formData.jabatan,
+        keterangan: formData.keterangan,
+        tanggal_uji: formData.tanggal_uji,
       },
     });
   }

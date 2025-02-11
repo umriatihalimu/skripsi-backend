@@ -24,7 +24,11 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^6.0.1",
+    "@types/jsonwebtoken": "^9.0.7",
     "class-validator": "^0.14.1",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "openai": "^4.78.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
   },

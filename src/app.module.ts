@@ -10,6 +10,9 @@ import { DomainService } from './domain-spbe/domain/domain.service';
 import { AspekController } from './domain-spbe/aspek/aspek.controller';
 import { AspekService } from './domain-spbe/aspek/aspek.service';
 import { IndikatorController } from './domain-spbe/indikator/indikator.controller';
+import { PengujiController } from './penguji/penguji.controller';
+import { PengujiService } from './penguji/penguji.service';
+import { LoginController } from './login/login.controller';
 
 @Module({
   imports: [],
@@ -19,6 +22,8 @@ import { IndikatorController } from './domain-spbe/indikator/indikator.controlle
     IndikatorController,
     DomainController,
     AspekController,
+    PengujiController,
+    LoginController,
   ],
   providers: [
     AppService,
@@ -27,6 +32,7 @@ import { IndikatorController } from './domain-spbe/indikator/indikator.controlle
     IndikatorService,
     DomainService,
     AspekService,
+    PengujiService,
   ],
 })
 export class AppModule {}

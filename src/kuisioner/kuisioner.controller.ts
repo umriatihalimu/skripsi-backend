@@ -11,10 +11,12 @@ import {
 } from '@nestjs/common';
 import { tb_kuisioner } from '@prisma/client';
 import { KuisionerService } from './kuisioner.service';
+import OpenAI from 'openai';
 
 @Controller('kuisioner') // Prefix untuk route
 export class KuisionerController {
   constructor(private readonly kuisionerService: KuisionerService) {}
+
   @Get()
   async findAll() {
     const find = await this.kuisionerService.findAll();
