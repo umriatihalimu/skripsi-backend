@@ -33,14 +33,17 @@ model tb_indikator {
   nama_indikator  String?           @db.Text
   id_aspek        Int?
   id_domain       Int?
+  id_tipe         Int?
   jawab_kuisioner jawab_kuisioner[]
   skor            skor[]
   tb_aspek        tb_aspek?         @relation(fields: [id_aspek], references: [id_aspek], onDelete: Restrict, onUpdate: Restrict, map: "tb_indikator_ibfk_1")
+  tb_tipe         tb_tipe?          @relation(fields: [id_tipe], references: [id_tipe], onDelete: Cascade, onUpdate: Restrict, map: "tb_indikator_ibfk_2")
   tb_kuisioner    tb_kuisioner[]
 
   @@index([id_aspek], map: "id_aspek")
   @@index([id_domain], map: "id_domain")
   @@index([id_aspek], map: "id_aspek_2")
+  @@index([id_tipe], map: "id_chart")
 }
 
 model tb_kuisioner {
@@ -98,6 +101,13 @@ model skor {
 
   @@index([id_indikator], map: "id_indikator")
   @@index([id_penguji], map: "id_penguji")
+}
+
+model tb_tipe {
+  id_tipe      Int            @id @default(autoincrement())
+  nama_tipe    String         @db.VarChar(90)
+  time_stamp   DateTime       @default(now()) @db.Timestamp(0)
+  tb_indikator tb_indikator[]
 }
 
 enum jawab_kuisioner_jawaban {

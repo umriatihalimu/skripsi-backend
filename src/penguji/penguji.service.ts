@@ -51,4 +51,5 @@ export class PengujiService {
     });
     return { penguji: penguji, skor: skor };
   }
+  
 }

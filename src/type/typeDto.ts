@@ -17,3 +17,9 @@ export interface Pertanyaan {
   opsi_jawaban: string[];
   jawaban: any;
 }
+
+export interface TipeChart {
+  id: string;
+  name: string;
+  value: any;
+}

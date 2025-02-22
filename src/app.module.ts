@@ -13,6 +13,8 @@ import { IndikatorController } from './domain-spbe/indikator/indikator.controlle
 import { PengujiController } from './penguji/penguji.controller';
 import { PengujiService } from './penguji/penguji.service';
 import { LoginController } from './login/login.controller';
+import { TipeController } from './tipe/tipe.controller';
+import { TipeService } from './tipe/tipe.service';
 
 @Module({
   imports: [],
@@ -24,6 +26,7 @@ import { LoginController } from './login/login.controller';
     AspekController,
     PengujiController,
     LoginController,
+    TipeController,
   ],
   providers: [
     AppService,
@@ -33,6 +36,7 @@ import { LoginController } from './login/login.controller';
     DomainService,
     AspekService,
     PengujiService,
+    TipeService,
   ],
 })
 export class AppModule {}
