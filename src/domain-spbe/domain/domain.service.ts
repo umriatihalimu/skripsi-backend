@@ -14,7 +14,7 @@ export class DomainService {
     });
   }
 
-  async createDomain(@Body() formDomain: tb_domain) {
+  async createDomain(formDomain: tb_domain) {
     return await this.prisma.tb_domain.create({
       data: {
         domain: formDomain.domain,

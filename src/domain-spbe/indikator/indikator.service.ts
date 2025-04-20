@@ -19,10 +19,14 @@ export class IndikatorService {
   }
 
   async createIndikator(@Body() formIndikator: tb_indikator) {
+    console.log(formIndikator);
+
     return await this.prisma.tb_indikator.create({
       data: {
         indikator: formIndikator.indikator,
         nama_indikator: formIndikator.nama_indikator,
+        id_aspek: formIndikator.id_aspek,
+        id_domain: formIndikator.id_domain,
       },
     });
   }
@@ -76,9 +80,23 @@ export class IndikatorService {
   }
 
   async deleteIndikator(id: string) {
-    return await this.prisma.tb_indikator.delete({
-      where: { id_indikator: Number(id) },
-    });
+    try {
+      await this.prisma.tb_kuisioner.deleteMany({
+        where: { id_indikator: Number(id) },
+      });
+      await this.prisma.jawab_kuisioner.deleteMany({
+        where: { id_indikator: Number(id) },
+      });
+      await this.prisma.skor.deleteMany({
+        where: { id_indikator: Number(id) },
+      });
+      await this.prisma.tb_indikator.delete({
+        where: { id_indikator: Number(id) },
+      });
+    } catch (error) {
+      console.log('errorr:', error);
+    }
+    return 'xxx';
   }
 
   async indikatorByIdaspek(id: string) {
