@@ -48,6 +48,7 @@ model tb_indikator {
 
 model tb_kuisioner {
   id_kuisioner Int           @id @default(autoincrement())
+  level        Int
   kuisioner    String        @db.Text
   time_stamp   DateTime      @default(now()) @db.Timestamp(0)
   id_indikator Int?

@@ -19,7 +19,7 @@ export class IndikatorService {
   }
 
   async createIndikator(@Body() formIndikator: tb_indikator) {
-    console.log(formIndikator);
+    //console.log(formIndikator);
 
     return await this.prisma.tb_indikator.create({
       data: {
@@ -96,7 +96,7 @@ export class IndikatorService {
     } catch (error) {
       console.log('errorr:', error);
     }
-    return 'xxx';
+    return 'x';
   }
 
   async indikatorByIdaspek(id: string) {

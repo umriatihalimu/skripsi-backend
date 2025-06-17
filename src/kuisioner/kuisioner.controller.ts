@@ -16,9 +16,9 @@ import { KuisionerService } from './kuisioner.service';
 export class KuisionerController {
   constructor(private readonly kuisionerService: KuisionerService) {}
 
-  @Get()
-  async findAll() {
-    const find = await this.kuisionerService.findAll();
+  @Get(':id')
+  async findAll(@Param('id') id: string) {
+    const find = await this.kuisionerService.findAll(Number(id));
     return {
       status: 'ok',
       message: 'success',

@@ -10,9 +10,10 @@ export class KuisionerService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async gpt(command: string): Promise<string> {
-    const openai = new OpenAI({ apiKey: process.env.KEY_GPT });
+    const openai = new OpenAI({ apiKey: process.env.KEY_GPT }); //inisialisasi ai
 
     const completion = await openai.chat.completions.create({
+      //fungsi kirim pertanyaan
       model: 'gpt-4o',
       messages: [
         {
@@ -22,15 +23,18 @@ export class KuisionerService {
       ],
     });
 
-    return completion.choices[0].message.content
+    return completion.choices[0].message.content //ambil jwbn hilangkan jsonnya
       .replaceAll('```', '')
       .replaceAll('json', '');
   }
 
-  async findAll() {
+  async findAll(id: number) {
     return await this.prismaService.tb_kuisioner.findMany({
+      where: {
+        id_indikator: id,
+      },
       orderBy: {
-        time_stamp: 'asc',
+        level: 'asc', // atau 'desc' untuk urutan menurun
       },
     });
   }
@@ -39,6 +43,8 @@ export class KuisionerService {
     return await this.prismaService.tb_kuisioner.create({
       data: {
         kuisioner: formData.kuisioner,
+        id_indikator: Number(formData.id_indikator),
+        level: Number(formData.level),
       },
     });
   }

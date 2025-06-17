@@ -20,6 +20,7 @@ export class IndikatorController {
   async createIndikator(@Body() formIndikator: tb_indikator) {
     try {
       const data = await this.indikatorService.createIndikator(formIndikator);
+
       return {
         status: 'ok',
         message: 'success',
@@ -43,32 +44,27 @@ export class IndikatorController {
       level: string;
     },
   ) {
-    const perintah = `berikan kuisioner domain ${formKuisioner.nama_domain} dengan aspek ${formKuisioner.nama_aspek}, untuk indikator ${formKuisioner.nama_indikator} pada Dinas Komunikasi dan Informasi Kota Kendari untuk domain COBIT 5 level ${formKuisioner.level} setiap indikator minimal teks pertanyaannya 5 pertanyaan. buatkan dalam bentuk json dengan format seperti dibawah ini outputnya hanya format json tanpa kalimat lain 
-
-interface Kuesioner {
-  judul: string;
-  deskripsi: string;
-  indikator: Indikator[];
-  tingkat_kematangan: Record<string, string>;
-}
-
-interface Indikator {
-  id: string;
-  nama: string;
-  pertanyaan: Pertanyaan[];
-}
-
-interface Pertanyaan {
-  id: string;
-  teks: string;
-  opsi_jawaban: ['Ya', 'Tidak'];
-  jawaban:string
-}
-`;
-    // console.log(perintah);
-
+    const perintah = `berikan kuisioner domain ${formKuisioner.nama_domain} dengan aspek ${formKuisioner.nama_aspek}, untuk indikator ${formKuisioner.nama_indikator} pada Dinas Komunikasi dan Informasi Kota Kendari untuk domain COBIT 5 level ${formKuisioner.level} setiap indikator minimal teks pertanyaannya 5 pertanyaan. sertakan dengan sumber pertanyaannya secara detail dari mana. buatkan dalam bentuk json dengan format seperti dibawah ini outputnya hanya format json tanpa kalimat lain
+    interface Kuesioner {
+      judul: string;
+      deskripsi: string;
+      indikator: Indikator[];
+      tingkat_kematangan: Record<string, string>;
+    }
+    interface Indikator {
+      id: string;
+      nama: string;
+      pertanyaan: Pertanyaan[];
+     }
+   interface Pertanyaan {
+      id: string;
+       teks: string;
+       opsi_jawaban: ['Ya', 'Tidak'];
+      jawaban:string
+     }
+    `;
+    console.log(perintah);
     const hasil = await this.kuisionerService.gpt(perintah);
-
     return { status: 'success', data: JSON.parse(hasil) };
   }
 
@@ -108,7 +104,7 @@ interface Pertanyaan {
     hasilnya hanya {skor:number}, tidak ada teks yang lain
     `;
     const skorJawaban = await this.kuisionerService.gpt(jawaban);
-    // console.log(jawaban);
+    console.log(jawaban);
     await this.indikatorService.skor(
       formData.id_indikator,
       formData.id_penguji,
