@@ -15,6 +15,10 @@ import { PengujiService } from './penguji/penguji.service';
 import { LoginController } from './login/login.controller';
 import { TipeController } from './tipe/tipe.controller';
 import { TipeService } from './tipe/tipe.service';
+import { PertanyaanController } from './pertanyaan/pertanyaan.controller';
+import { PertanyaanService } from './pertanyaan/pertanyaan.service';
+import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [],
@@ -27,6 +31,8 @@ import { TipeService } from './tipe/tipe.service';
     PengujiController,
     LoginController,
     TipeController,
+    PertanyaanController,
+    UserController,
   ],
   providers: [
     AppService,
@@ -37,6 +43,8 @@ import { TipeService } from './tipe/tipe.service';
     AspekService,
     PengujiService,
     TipeService,
+    PertanyaanService,
+    UserService,
   ],
 })
 export class AppModule {}

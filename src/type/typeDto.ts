@@ -23,3 +23,21 @@ export interface TipeChart {
   name: string;
   value: any;
 }
+export type tb_kuisionerBaru = {
+  id_indikator: number;
+  level: number;
+  id_kuisioner: number;
+  kuisioner: string;
+  time_stamp: Date;
+  jawaban: string;
+};
+
+export type jawab_pertanyaan = {
+  id_indikator: number;
+  level: number;
+  jawaban: string;
+  soal: string;
+  id_domain: number;
+  id_aspek: number;
+  id_penguji: number;
+};

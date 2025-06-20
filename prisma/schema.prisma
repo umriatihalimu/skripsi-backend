@@ -58,19 +58,19 @@ model tb_kuisioner {
 }
 
 model jawab_kuisioner {
-  id_jawab_kuisioner Int                     @id @default(autoincrement())
+  id_jawab_kuisioner Int          @id @default(autoincrement())
   level              Int
-  soal               String                  @db.Text
-  jawaban            jawab_kuisioner_jawaban
+  soal               String       @db.Text
+  jawaban            String       @db.VarChar(100)
   id_domain          Int
   id_aspek           Int
   id_indikator       Int
-  time_stamp         DateTime                @default(now()) @db.Timestamp(0)
+  time_stamp         DateTime     @default(now()) @db.Timestamp(0)
   id_penguji         Int
-  tb_domain          tb_domain               @relation(fields: [id_domain], references: [id_domain], onDelete: Cascade, map: "jawab_kuisioner_ibfk_1")
-  tb_aspek           tb_aspek                @relation(fields: [id_aspek], references: [id_aspek], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_2")
-  tb_indikator       tb_indikator            @relation(fields: [id_indikator], references: [id_indikator], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_3")
-  penguji            penguji                 @relation(fields: [id_penguji], references: [id_penguji], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_4")
+  tb_domain          tb_domain    @relation(fields: [id_domain], references: [id_domain], onDelete: Cascade, map: "jawab_kuisioner_ibfk_1")
+  tb_aspek           tb_aspek     @relation(fields: [id_aspek], references: [id_aspek], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_2")
+  tb_indikator       tb_indikator @relation(fields: [id_indikator], references: [id_indikator], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_3")
+  penguji            penguji      @relation(fields: [id_penguji], references: [id_penguji], onDelete: Cascade, onUpdate: Restrict, map: "jawab_kuisioner_ibfk_4")
 
   @@index([id_aspek], map: "id_aspek")
   @@index([id_domain], map: "id_domain")
@@ -111,7 +111,10 @@ model tb_tipe {
   tb_indikator tb_indikator[]
 }
 
-enum jawab_kuisioner_jawaban {
-  Ya
-  Tidak
+model user {
+  id_username Int    @id @default(autoincrement())
+  nama_user   String @db.VarChar(100)
+  username    String @db.VarChar(100)
+  password    String @db.VarChar(150)
+  tipe_user   String @db.VarChar(100)
 }
