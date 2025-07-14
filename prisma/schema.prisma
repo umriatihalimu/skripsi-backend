@@ -62,6 +62,7 @@ model jawab_kuisioner {
   level              Int
   soal               String       @db.Text
   jawaban            String       @db.VarChar(100)
+  nama_file          String?      @db.VarChar(100)
   id_domain          Int
   id_aspek           Int
   id_indikator       Int
