@@ -10,7 +10,11 @@ export class AuthMiddleware implements NestMiddleware {
 
     if (url.includes('/login')) {
       next();
-    } else {
+    }
+    if (url.includes("upload")) {
+      next()
+    }
+    else {
       if (typeof token == 'undefined') {
         res.json({
           status: 'forbidden',

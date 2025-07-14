@@ -30,6 +30,7 @@ export type tb_kuisionerBaru = {
   kuisioner: string;
   time_stamp: Date;
   jawaban: string;
+
 };
 
 export type jawab_pertanyaan = {
@@ -40,4 +41,14 @@ export type jawab_pertanyaan = {
   id_domain: number;
   id_aspek: number;
   id_penguji: number;
+  id_kuisioner: number;
+  nama_file?: string;
 };
+export type sc = {
+
+  data: tb_kuisionerBaru[];
+  id_penguji: string;
+  id_domain: string;
+  id_aspek: string;
+
+}
